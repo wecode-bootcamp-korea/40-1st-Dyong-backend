@@ -7,6 +7,9 @@ const { DataSource } = require('typeorm');
 dotenv.config();
 
 const app = express();
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(cors());
 
 const appDataSource = new DataSource({
   type: process.env.TYPEORM_CONNECTION,
@@ -16,10 +19,6 @@ const appDataSource = new DataSource({
   password: process.env.TYPEORM_PASSWORD,
   database: process.env.TYPEORM_DATABASE,
 });
-
-app.use(express.json());
-app.use(morgan('dev'));
-app.use(cors());
 
 appDataSource
   .initialize()
@@ -46,3 +45,7 @@ const start = async () => {
 };
 
 start();
+
+module.exports = {
+  appDataSource,
+};
