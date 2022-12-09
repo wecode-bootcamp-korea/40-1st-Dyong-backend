@@ -34,6 +34,22 @@ app.get('/ping', (req, res) => {
   res.status(200).json({ message: 'pong' });
 });
 
+app.post('/signin', async (req, res, next) => {
+  const { full_name, username, email, password, phone_number } =req.body
+  await appDataSource.query(
+  `INSERT INTO users(
+    full_name,
+    username,
+    email,
+    password,
+    phone_number
+    ) VALUES (?, ?, ?, ?, ?);
+    `,
+      [ full_name, username, email, password, phone_number ]
+  );
+   res.status(201).json( { message : ' WELCOME TO JOIN OUR WEB SITE! '});
+})
+
 const PORT = process.env.PORT;
 const start = async () => {
   try {
