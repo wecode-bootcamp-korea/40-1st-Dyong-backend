@@ -15,7 +15,7 @@ const appDataSource = new DataSource({
 const getUserById = async (id) => {
   try {
     return await appDataSource.query(`
-    SELECT * 
+    SELECT u.id, u.username, u.password
     FROM users u 
     WHERE u.username = '${id}'
     `);
