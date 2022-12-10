@@ -26,27 +26,15 @@ const allProducts = async () => {
     const data = await appDataSource.query(`
     SELECT 
     p.name,
-    p.content,
     p.price,
     i.main_image,
-    i.sub_image,
-    i.content_image,
-    c.name as category,
-    t.name as type
+    i.sub_image
     FROM 
     products p
     INNER JOIN 
     images i
     ON 
     p.image_id = i.id
-    INNER JOIN 
-    categories c
-    ON
-    p.category_id = c.id
-    INNER JOIN
-    product_types t
-    ON 
-    p.product_type_id = t.id;
     `);
     return data;
   } catch (err) {
