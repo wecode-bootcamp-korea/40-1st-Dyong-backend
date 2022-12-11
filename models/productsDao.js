@@ -21,7 +21,9 @@ appDataSource
     console.log(err);
   });
 
-const allProducts = async () => {
+const allProducts = async (offset, limit) => {
+  const start = parseInt(offset);
+  const range = parseInt(limit);
   try {
     const data = await appDataSource.query(`
     SELECT 
@@ -35,6 +37,7 @@ const allProducts = async () => {
     images i
     ON 
     p.image_id = i.id
+    LIMIT ${start}, ${range}
     `);
     return data;
   } catch (err) {
@@ -45,7 +48,9 @@ const allProducts = async () => {
   }
 };
 
-const getProductsByType = async (type) => {
+const getProductsByType = async (type, offset, limit) => {
+  const start = parseInt(offset);
+  const range = parseInt(limit);
   try {
     if (type.length === 1) {
       const data = await appDataSource.query(`
@@ -66,6 +71,7 @@ const getProductsByType = async (type) => {
       p.product_type_id = t.id
       WHERE 
       t.name = '${type[0]}'
+      LIMIT ${start}, ${range}
       `);
       return data;
     }
@@ -88,6 +94,7 @@ const getProductsByType = async (type) => {
           p.product_type_id = t.id
           WHERE 
           t.name = '${type[0]}' OR t.name = '${type[1]}'
+          LIMIT ${start}, ${range}
           `);
       return data;
     }
@@ -110,6 +117,7 @@ const getProductsByType = async (type) => {
             p.product_type_id = t.id
             WHERE 
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]}'
+            LIMIT ${start}, ${range}
             `);
       return data;
     }
@@ -132,6 +140,7 @@ const getProductsByType = async (type) => {
             p.product_type_id = t.id
             WHERE 
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]} 'OR t.name = '${type[3]}'
+            LIMIT ${start}, ${range}
             `);
       return data;
     }
@@ -143,7 +152,9 @@ const getProductsByType = async (type) => {
   }
 };
 
-const getProductsBySort = async (sort) => {
+const getProductsBySort = async (sort, offset, limit) => {
+  const start = parseInt(offset);
+  const range = parseInt(limit);
   let order;
   if (sort === 'new-arrival') {
     order = 'p.created_at DESC';
@@ -169,6 +180,7 @@ const getProductsBySort = async (sort) => {
         p.image_id = i.id
         ORDER BY 
         ${order}
+        LIMIT ${start}, ${range}
         `);
     return data;
   } catch (err) {
@@ -179,7 +191,9 @@ const getProductsBySort = async (sort) => {
   }
 };
 
-const getProductsBySortQuery = async (type, sort) => {
+const getProductsBySortQuery = async (type, sort, offset, limit) => {
+  const start = parseInt(offset);
+  const range = parseInt(limit);
   let order;
   if (sort === 'new-arrival') {
     order = 'p.created_at DESC';
@@ -212,6 +226,7 @@ const getProductsBySortQuery = async (type, sort) => {
       t.name = '${type[0]}'
       ORDER BY
       ${order}
+      LIMIT ${start}, ${range}
       `);
       return data;
     }
@@ -236,6 +251,7 @@ const getProductsBySortQuery = async (type, sort) => {
           t.name = '${type[0]}' OR t.name = '${type[1]}'
           ORDER BY
           ${order}
+          LIMIT ${start}, ${range}
           `);
       return data;
     }
@@ -260,6 +276,7 @@ const getProductsBySortQuery = async (type, sort) => {
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]}'
             ORDER BY
             ${order}
+            LIMIT ${start}, ${range}
             `);
       return data;
     }
@@ -284,6 +301,7 @@ const getProductsBySortQuery = async (type, sort) => {
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]} 'OR t.name = '${type[3]}'
             ORDER BY 
             ${order}
+            LIMIT ${start}, ${range}
             `);
       return data;
     }
