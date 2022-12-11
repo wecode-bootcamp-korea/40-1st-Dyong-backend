@@ -1,8 +1,16 @@
 const fs = require('fs');
 const dotenv = require('dotenv');
-const { appDataSource } = require('./app');
-
+const { DataSource } = require('typeorm');
 dotenv.config();
+
+const appDataSource = new DataSource({
+  type: process.env.TYPEORM_CONNECTION,
+  host: process.env.TYPEORM_HOST,
+  port: process.env.TYPEORM_PORT,
+  username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
+});
 
 const userUpload = async (path) => {
   const data = fs.readFileSync(path, 'utf8');
@@ -109,9 +117,9 @@ const productsUpload = async (path) => {
 };
 
 const imagesUpload = async (path) => {
+  console.log('start');
   const data = fs.readFileSync(path, 'utf8');
   const rows = data.split('\r\n');
-
   let results = [];
   let columnTitle = [];
   for (const i in rows) {
@@ -126,6 +134,7 @@ const imagesUpload = async (path) => {
         rowData[title] = data[index];
       }
       results.push(rowData);
+      console.log(results);
     }
   }
 
@@ -424,4 +433,5 @@ module.exports = {
   ordersUpload,
   commentsUpload,
   statusCodesUpload,
+  appDataSource,
 };
