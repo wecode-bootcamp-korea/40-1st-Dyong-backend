@@ -6,24 +6,24 @@ const {
 } = require('../models/productsDao.js');
 
 const getAllProducts = async (req, res) => {
-  const { type, sort, offset, limit } = req.query;
+  const { type, sort, page } = req.query;
   try {
     if (!type && !sort) {
-      const data = await allProducts(offset, limit);
+      const data = await allProducts(page);
       return res.status(200).json(data);
     }
     if (!sort) {
       const result = type.split(',');
-      const data = await getProductsByType(result, offset, limit);
+      const data = await getProductsByType(result, page);
       return res.status(200).json(data);
     }
     if (!type) {
-      const data = await getProductsBySort(sort, offset, limit);
+      const data = await getProductsBySort(sort, page);
       return res.status(200).json(data);
     }
     if (type && sort) {
       const result = type.split(',');
-      const data = await getProductsBySortQuery(result, sort, offset, limit);
+      const data = await getProductsBySortQuery(result, sort, page);
       return res.status(200).json(data);
     }
   } catch (err) {

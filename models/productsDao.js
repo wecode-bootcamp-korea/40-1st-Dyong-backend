@@ -1,6 +1,6 @@
 const { DataSource } = require('typeorm');
 const dotenv = require('dotenv');
-
+const limit = 6;
 dotenv.config();
 
 const appDataSource = new DataSource({
@@ -21,9 +21,8 @@ appDataSource
     console.log(err);
   });
 
-const allProducts = async (offset, limit) => {
-  const start = parseInt(offset);
-  const range = parseInt(limit);
+const allProducts = async (page) => {
+  const start = parseInt(page) * 6;
   try {
     const data = await appDataSource.query(`
     SELECT 
@@ -37,7 +36,7 @@ const allProducts = async (offset, limit) => {
     images i
     ON 
     p.image_id = i.id
-    LIMIT ${start}, ${range}
+    LIMIT ${start}, ${limit}
     `);
     return data;
   } catch (err) {
@@ -48,9 +47,8 @@ const allProducts = async (offset, limit) => {
   }
 };
 
-const getProductsByType = async (type, offset, limit) => {
-  const start = parseInt(offset);
-  const range = parseInt(limit);
+const getProductsByType = async (type, page) => {
+  const start = parseInt(page) * 6;
   try {
     if (type.length === 1) {
       const data = await appDataSource.query(`
@@ -71,7 +69,7 @@ const getProductsByType = async (type, offset, limit) => {
       p.product_type_id = t.id
       WHERE 
       t.name = '${type[0]}'
-      LIMIT ${start}, ${range}
+      LIMIT ${start}, ${limit}
       `);
       return data;
     }
@@ -94,7 +92,7 @@ const getProductsByType = async (type, offset, limit) => {
           p.product_type_id = t.id
           WHERE 
           t.name = '${type[0]}' OR t.name = '${type[1]}'
-          LIMIT ${start}, ${range}
+          LIMIT ${start}, ${limit}
           `);
       return data;
     }
@@ -117,7 +115,7 @@ const getProductsByType = async (type, offset, limit) => {
             p.product_type_id = t.id
             WHERE 
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]}'
-            LIMIT ${start}, ${range}
+            LIMIT ${start}, ${limit}
             `);
       return data;
     }
@@ -140,7 +138,7 @@ const getProductsByType = async (type, offset, limit) => {
             p.product_type_id = t.id
             WHERE 
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]} 'OR t.name = '${type[3]}'
-            LIMIT ${start}, ${range}
+            LIMIT ${start}, ${limit}
             `);
       return data;
     }
@@ -152,9 +150,8 @@ const getProductsByType = async (type, offset, limit) => {
   }
 };
 
-const getProductsBySort = async (sort, offset, limit) => {
-  const start = parseInt(offset);
-  const range = parseInt(limit);
+const getProductsBySort = async (sort, page) => {
+  const start = parseInt(page) * 6;
   let order;
   if (sort === 'new-arrival') {
     order = 'p.created_at DESC';
@@ -180,7 +177,7 @@ const getProductsBySort = async (sort, offset, limit) => {
         p.image_id = i.id
         ORDER BY 
         ${order}
-        LIMIT ${start}, ${range}
+        LIMIT ${start}, ${limit}
         `);
     return data;
   } catch (err) {
@@ -191,9 +188,8 @@ const getProductsBySort = async (sort, offset, limit) => {
   }
 };
 
-const getProductsBySortQuery = async (type, sort, offset, limit) => {
-  const start = parseInt(offset);
-  const range = parseInt(limit);
+const getProductsBySortQuery = async (type, sort, page) => {
+  const start = parseInt(page) * 6;
   let order;
   if (sort === 'new-arrival') {
     order = 'p.created_at DESC';
@@ -226,7 +222,7 @@ const getProductsBySortQuery = async (type, sort, offset, limit) => {
       t.name = '${type[0]}'
       ORDER BY
       ${order}
-      LIMIT ${start}, ${range}
+      LIMIT ${start}, ${limit}
       `);
       return data;
     }
@@ -251,7 +247,7 @@ const getProductsBySortQuery = async (type, sort, offset, limit) => {
           t.name = '${type[0]}' OR t.name = '${type[1]}'
           ORDER BY
           ${order}
-          LIMIT ${start}, ${range}
+          LIMIT ${start}, ${limit}
           `);
       return data;
     }
@@ -276,7 +272,7 @@ const getProductsBySortQuery = async (type, sort, offset, limit) => {
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]}'
             ORDER BY
             ${order}
-            LIMIT ${start}, ${range}
+            LIMIT ${start}, ${limit}
             `);
       return data;
     }
@@ -301,7 +297,7 @@ const getProductsBySortQuery = async (type, sort, offset, limit) => {
             t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]} 'OR t.name = '${type[3]}'
             ORDER BY 
             ${order}
-            LIMIT ${start}, ${range}
+            LIMIT ${start}, ${limit}
             `);
       return data;
     }
