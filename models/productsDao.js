@@ -25,17 +25,18 @@ const allProducts = async (page) => {
   const start = parseInt(page) * 6;
   try {
     const data = await appDataSource.query(`
-    SELECT 
-    p.name,
-    p.price,
-    i.main_image,
-    i.sub_image
+    SELECT
+        p.id,
+        p.name,
+        p.price,
+        i.main_image,
+        i.sub_image
     FROM 
-    products p
+        products p
     INNER JOIN 
-    images i
+        images i
     ON 
-    p.image_id = i.id
+        p.image_id = i.id
     LIMIT ${start}, ${limit}
     `);
     return data;
@@ -50,98 +51,27 @@ const allProducts = async (page) => {
 const getProductsByType = async (type, page) => {
   const start = parseInt(page) * 6;
   try {
-    if (type.length === 1) {
-      const data = await appDataSource.query(`
+    const data = await appDataSource.query(`
       SELECT 
-      p.name,
-      p.price,
-      i.main_image,
-      i.sub_image
-      FROM 
-      products p
-      INNER JOIN 
-      images i 
-      ON 
-      p.image_id = i.id
-      INNER JOIN 
-      product_types t
-      ON 
-      p.product_type_id = t.id
-      WHERE 
-      t.name = '${type[0]}'
-      LIMIT ${start}, ${limit}
-      `);
-      return data;
-    }
-    if (type.length === 2) {
-      const data = await appDataSource.query(`
-          SELECT 
           p.name,
           p.price,
           i.main_image,
           i.sub_image
-          FROM 
-          products p
-          INNER JOIN 
+      FROM 
+            products p
+      INNER JOIN 
           images i 
-          ON 
+      ON 
           p.image_id = i.id
-          INNER JOIN 
+      INNER JOIN 
           product_types t
-          ON 
+      ON 
           p.product_type_id = t.id
-          WHERE 
-          t.name = '${type[0]}' OR t.name = '${type[1]}'
-          LIMIT ${start}, ${limit}
-          `);
-      return data;
-    }
-    if (type.length === 3) {
-      const data = await appDataSource.query(`
-            SELECT 
-            p.name,
-            p.price,
-            i.main_image,
-            i.sub_image
-            FROM 
-            products p
-            INNER JOIN 
-            images i 
-            ON 
-            p.image_id = i.id
-            INNER JOIN 
-            product_types t
-            ON 
-            p.product_type_id = t.id
-            WHERE 
-            t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]}'
-            LIMIT ${start}, ${limit}
-            `);
-      return data;
-    }
-    if (type.length === 4) {
-      const data = await appDataSource.query(`
-            SELECT 
-            p.name,
-            p.price,
-            i.main_image,
-            i.sub_image
-            FROM 
-            products p
-            INNER JOIN 
-            images i 
-            ON 
-            p.image_id = i.id
-            INNER JOIN 
-            product_types t
-            ON 
-            p.product_type_id = t.id
-            WHERE 
-            t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]} 'OR t.name = '${type[3]}'
-            LIMIT ${start}, ${limit}
-            `);
-      return data;
-    }
+      WHERE 
+          ${type}
+      LIMIT ${start}, ${limit}
+      `);
+    return data;
   } catch (err) {
     console.log(err);
     const error = new Error('DATABASE_ERROR');
@@ -150,33 +80,23 @@ const getProductsByType = async (type, page) => {
   }
 };
 
-const getProductsBySort = async (sort, page) => {
+const getProductsBySort = async (order, page) => {
   const start = parseInt(page) * 6;
-  let order;
-  if (sort === 'new-arrival') {
-    order = 'p.created_at DESC';
-  }
-  if (sort === 'price-desc') {
-    order = 'p.price DESC';
-  }
-  if (sort === 'price-asc') {
-    order = 'p.price';
-  }
   try {
     const data = await appDataSource.query(`
         SELECT 
-        p.name,
-        p.price,
-        i.main_image,
-        i.sub_image
+            p.name,
+            p.price,
+            i.main_image,
+            i.sub_image
         FROM 
-        products p
+            products p
         INNER JOIN 
-        images i
+            images i
         ON 
-        p.image_id = i.id
+            p.image_id = i.id
         ORDER BY 
-        ${order}
+            ${order}
         LIMIT ${start}, ${limit}
         `);
     return data;
@@ -188,119 +108,30 @@ const getProductsBySort = async (sort, page) => {
   }
 };
 
-const getProductsBySortQuery = async (type, sort, page) => {
+const getProductsBySortQuery = async (order, page) => {
   const start = parseInt(page) * 6;
-  let order;
-  if (sort === 'new-arrival') {
-    order = 'p.created_at DESC';
-  }
-  if (sort === 'price-desc') {
-    order = 'p.price DESC';
-  }
-  if (sort === 'price-asc') {
-    order = 'p.price';
-  }
   try {
-    if (type.length === 1) {
-      const data = await appDataSource.query(`
+    const data = await appDataSource.query(`
       SELECT 
-      p.name,
-      p.price,
-      i.main_image,
-      i.sub_image
-      FROM 
-      products p
-      INNER JOIN 
-      images i 
-      ON 
-      p.image_id = i.id
-      INNER JOIN 
-      product_types t
-      ON 
-      p.product_type_id = t.id
-      WHERE 
-      t.name = '${type[0]}'
-      ORDER BY
-      ${order}
-      LIMIT ${start}, ${limit}
-      `);
-      return data;
-    }
-    if (type.length === 2) {
-      const data = await appDataSource.query(`
-          SELECT 
           p.name,
           p.price,
           i.main_image,
           i.sub_image
-          FROM 
+      FROM 
           products p
-          INNER JOIN 
+      INNER JOIN 
           images i 
-          ON 
+      ON 
           p.image_id = i.id
-          INNER JOIN 
+      INNER JOIN 
           product_types t
-          ON 
+      ON 
           p.product_type_id = t.id
-          WHERE 
-          t.name = '${type[0]}' OR t.name = '${type[1]}'
-          ORDER BY
+      WHERE 
           ${order}
-          LIMIT ${start}, ${limit}
-          `);
-      return data;
-    }
-    if (type.length === 3) {
-      const data = await appDataSource.query(`
-            SELECT 
-            p.name,
-            p.price,
-            i.main_image,
-            i.sub_image
-            FROM 
-            products p
-            INNER JOIN 
-            images i 
-            ON 
-            p.image_id = i.id
-            INNER JOIN 
-            product_types t
-            ON 
-            p.product_type_id = t.id
-            WHERE 
-            t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]}'
-            ORDER BY
-            ${order}
-            LIMIT ${start}, ${limit}
-            `);
-      return data;
-    }
-    if (type.length === 4) {
-      const data = await appDataSource.query(`
-            SELECT 
-            p.name,
-            p.price,
-            i.main_image,
-            i.sub_image
-            FROM 
-            products p
-            INNER JOIN 
-            images i 
-            ON 
-            p.image_id = i.id
-            INNER JOIN 
-            product_types t
-            ON 
-            p.product_type_id = t.id
-            WHERE 
-            t.name = '${type[0]}' OR t.name = '${type[1]}' OR t.name = '${type[2]} 'OR t.name = '${type[3]}'
-            ORDER BY 
-            ${order}
-            LIMIT ${start}, ${limit}
-            `);
-      return data;
-    }
+      LIMIT ${start}, ${limit}
+      `);
+    return data;
   } catch (err) {
     console.log(err);
     const error = new Error('DATABASE_ERROR');

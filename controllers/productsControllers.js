@@ -4,6 +4,11 @@ const {
   getProductsBySort,
   getProductsBySortQuery,
 } = require('../models/productsDao.js');
+const {
+  sortOnly,
+  typeOnly,
+  typeAndSort,
+} = require('../services/productsService.js');
 
 const getAllProducts = async (req, res) => {
   const { type, sort, page } = req.query;
@@ -13,17 +18,15 @@ const getAllProducts = async (req, res) => {
       return res.status(200).json(data);
     }
     if (!sort) {
-      const result = type.split(',');
-      const data = await getProductsByType(result, page);
+      const data = await typeOnly(type, page);
       return res.status(200).json(data);
     }
     if (!type) {
-      const data = await getProductsBySort(sort, page);
+      const data = await sortOnly(sort, page);
       return res.status(200).json(data);
     }
     if (type && sort) {
-      const result = type.split(',');
-      const data = await getProductsBySortQuery(result, sort, page);
+      const data = await typeAndSort(type, sort, page);
       return res.status(200).json(data);
     }
   } catch (err) {
