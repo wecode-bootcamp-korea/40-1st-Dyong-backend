@@ -1,5 +1,5 @@
-const { DataSource } = require('typeorm');
 const dotenv = require('dotenv');
+const { appDataSource } = require('./productsDao');
 
 dotenv.config();
 
@@ -19,6 +19,5 @@ const getUserById = async (id) => {
 };
 
 module.exports = {
-  appDataSource,
   getUserById,
 };

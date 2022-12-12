@@ -287,6 +287,7 @@ const getCategoryBySortQuery = async (order, page) => {
   }
 };
 module.exports = {
+  appDataSource,
   allProducts,
   getProductsByType,
   getProductsBySort,
