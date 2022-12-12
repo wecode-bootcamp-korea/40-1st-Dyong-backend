@@ -1,9 +1,4 @@
-const {
-  getProductsByType,
-  allProducts,
-  getProductsBySort,
-  getProductsBySortQuery,
-} = require('../models/productsDao.js');
+const { allProducts } = require('../models/productsDao.js');
 const {
   sortOnly,
   typeOnly,
