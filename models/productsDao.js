@@ -25,20 +25,20 @@ const allProducts = async (page) => {
   const start = parseInt(page) * 6;
   try {
     const data = await appDataSource.query(`
-    SELECT
-        p.id,
-        p.name,
-        p.price,
-        i.main_image,
-        i.sub_image
-    FROM 
-        products p
-    INNER JOIN 
-        images i
-    ON 
-        p.image_id = i.id
-    LIMIT ${start}, ${limit}
-    `);
+        SELECT
+            p.id,
+            p.name,
+            p.price,
+            i.main_image,
+            i.sub_image
+        FROM 
+            products p
+        INNER JOIN 
+            images i
+        ON 
+            p.image_id = i.id
+        LIMIT ${start}, ${limit}
+        `);
     return data;
   } catch (err) {
     console.log(err);

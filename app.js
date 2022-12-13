@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const routes = require('./router');
+const { errorHandler } = require('./middlewares/error-handling');
 
 dotenv.config();
 
@@ -12,11 +13,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(routes);
-
-app.use(express.json());
-app.use(morgan('dev'));
-app.use(cors());
-app.use(routes);
+app.use(errorHandler);
 
 app.get('/ping', (req, res) => {
   res.status(200).json({ message: 'pong' });
