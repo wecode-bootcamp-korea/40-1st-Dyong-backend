@@ -3,16 +3,27 @@ const morgan = require('morgan');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-dotenv.config();
+const { appDataSource, getUserById } = require('./models/userDao.js');
+const router = require('./router');
 
-const route   = require('./api/routes')
+dotenv.config();
 
 const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
-app.use(route)
+app.use(router);
+
+appDataSource
+  .initialize()
+  .then(() => {
+    console.log('data has been initialized!');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 
 app.get('/ping', (req, res) => {
   res.status(200).json({ message: 'pong' });
