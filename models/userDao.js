@@ -1,4 +1,3 @@
-const { DataSource } = require('typeorm');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -13,8 +12,8 @@ const appDataSource = new DataSource({
 });
 
 const createUser = async (fullName, email, username, password, phoneNumber) => {
-  
-  return await appDataSource.query(`
+  return await appDataSource.query(
+    `
   INSERT INTO users (
     full_name,
     email,
@@ -23,12 +22,11 @@ const createUser = async (fullName, email, username, password, phoneNumber) => {
     phone_number
     ) VALUES (?, ?, ?, ?, ?);
   `,
-  [ fullName, email, username, password, phoneNumber ]
-  )  
-}
+    [fullName, email, username, password, phoneNumber]
+  );
+};
 
 const getUserById = async (id) => {
-  
   try {
     return await appDataSource.query(`
     SELECT u.id, u.username, u.password
@@ -45,7 +43,7 @@ const getUserById = async (id) => {
 };
 
 module.exports = {
+  getUserById,
   appDataSource,
   createUser,
-  getUserById
 };
