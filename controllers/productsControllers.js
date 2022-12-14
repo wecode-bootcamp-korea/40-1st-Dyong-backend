@@ -4,6 +4,7 @@ const {
   sortOnly,
   typeOnly,
   typeAndSort,
+  productsDetail
 } = require('../services/productsService.js');
 
 const getAllProducts = catchAsync(async (req, res, next) => {
@@ -48,7 +49,16 @@ const getProductsByCategory = catchAsync(async (req, res, next) => {
     return res.status(200).json(data);
   }
 });
+
+const getProductsById = catchAsync(async(req, res) => {
+  const Id = await productsDetail(req.params.id)
+  return res.status(200).json(Id);
+});
+
+
+
 module.exports = {
   getAllProducts,
   getProductsByCategory,
+  getProductsById
 };

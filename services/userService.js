@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt')
-const { getUserById } = require('../models/userDao');
-const { createUser } = require('../models/userDao')
+const { getUserById, createUser } = require('../models/userDao');
 const jwt = require('jsonwebtoken');
 
 const hashPassword = async(password) => {
@@ -10,9 +9,8 @@ const hashPassword = async(password) => {
 }
 
 const signUpService = async(fullName, email, username, password, phoneNumber) => {
-  const emailRegex =/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,r3}$/;
-	const passwordRegex =/^[a-z0-9_]{4,20}$/;
-	const phoneNumberRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+  const emailRegex =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	const phoneNumberRegex = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/;
 
 	if ( !fullName || !email || !username || !password || !phoneNumber ) {
 		const error = new Error('KEY_ERROR');
@@ -23,13 +21,6 @@ const signUpService = async(fullName, email, username, password, phoneNumber) =>
 	
 	if (!emailRegex.test(email)) {
 		const error = new Error('INVALID_EMAIL');
-		error.statusCode = 400;
-
-		throw error
-	}
-
-  if (!passwordRegex.test(password)) {
-		const error = new Error('INVALID_PASSWORD');
 		error.statusCode = 400;
 
 		throw error
