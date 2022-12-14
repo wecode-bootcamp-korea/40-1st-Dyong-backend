@@ -13,6 +13,7 @@ const appDataSource = new DataSource({
 });
 
 const createUser = async (fullName, email, username, password, phoneNumber) => {
+  
   return await appDataSource.query(`
   INSERT INTO users (
     full_name,
@@ -27,6 +28,7 @@ const createUser = async (fullName, email, username, password, phoneNumber) => {
 }
 
 const getUserById = async (id) => {
+  
   try {
     return await appDataSource.query(`
     SELECT u.id, u.username, u.password
@@ -37,6 +39,7 @@ const getUserById = async (id) => {
     console.log(err);
     const error = new Error('INVALID_USER');
     error.statusCode = 404;
+
     throw error;
   }
 };

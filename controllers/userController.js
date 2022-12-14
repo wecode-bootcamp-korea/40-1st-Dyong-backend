@@ -17,9 +17,10 @@ const signUp = async(req,res) => {
 }
 
 const signin = async (req, res, next) => {
-  const { id, password } = req.body;
+  const { username, password } = req.body;
+  
   try {
-    const token = await signInService(id, password)
+    const token = await signInService(username, password)
 
     return res.status(200).json({ accessToken: token });
 
