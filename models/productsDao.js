@@ -32,7 +32,7 @@ const allProducts = async (page) => {
 };
 
 const getProductsByType = async (type, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
       SELECT
@@ -65,7 +65,7 @@ const getProductsByType = async (type, page) => {
 };
 
 const getProductsBySort = async (order, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT 
@@ -94,7 +94,7 @@ const getProductsBySort = async (order, page) => {
 };
 
 const getProductsBySortQuery = async (order, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
       SELECT 
@@ -127,7 +127,7 @@ const getProductsBySortQuery = async (order, page) => {
 };
 
 const getCategory = async (page, category) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
     SELECT
@@ -160,7 +160,7 @@ const getCategory = async (page, category) => {
 };
 
 const getCategoryBySort = async (order, page, category) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT 
@@ -195,7 +195,7 @@ const getCategoryBySort = async (order, page, category) => {
 };
 
 const getCategoryByType = async (order, page, category) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT 
@@ -234,7 +234,7 @@ const getCategoryByType = async (order, page, category) => {
 };
 
 const getCategoryBySortQuery = async (order, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
       SELECT 

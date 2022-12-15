@@ -2,9 +2,9 @@ const sortBy = (sort) => {
   switch (sort) {
     case 'new-arrival':
       return 'p.created_at DESC';
-    case 'price-desc':
+    case 'high-price':
       return 'p.price DESC';
-    case 'price-asc':
+    case 'low-price':
       return 'p.price';
   }
 };
@@ -49,7 +49,6 @@ const searchCartQuery = (cartId) => {
       query += ` OR c.id = ${result}`;
     }
   }
-  console.log(query);
   return query;
 };
 
@@ -64,7 +63,6 @@ const insertOrderQuery = (cartId) => {
       query += `,(${result}, 2)`;
     }
   }
-  console.log(query);
   return query;
 };
 
@@ -83,17 +81,6 @@ const deleteCartByCartIdQuery = (results) => {
   query += ')';
   return query;
 };
-// const deleteCartByCartIdQuery = (cartId) => {
-//   const results = cartId.split(',');
-//   let query;
-//   for (const i in results) {
-//     const result = results[i];
-//     if(i === '0') {
-//       query = ``
-//     }
-//   }
-
-// }
 module.exports = {
   sortBy,
   typeBy,

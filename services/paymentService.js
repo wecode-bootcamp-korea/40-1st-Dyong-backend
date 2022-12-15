@@ -38,12 +38,6 @@ const deleteCartService = async (productId, userId) => {
   return await deleteCart(order);
 };
 
-// const orderService = async (cartId, userId, sum) => {
-//   const searchOrder = searchCartQuery(cartId);
-
-//   const deleteOrder = await deleteQuery(cartId, userId);
-// };
-
 const orderService = async (cartId, userId, sum) => {
   const cartOrder = searchCartQuery(cartId);
   await updateCartByCartId(cartOrder);

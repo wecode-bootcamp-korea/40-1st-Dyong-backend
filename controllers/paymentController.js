@@ -27,13 +27,13 @@ const deleteCart = catchAsync(async (req, res, next) => {
   return res.status(200).json({ message: 'DELETED' });
 });
 
-const postOrder = async (req, res, next) => {
+const postOrder = catchAsync(async (req, res, next) => {
   const cartId = req.body.id;
   const sum = req.body.sum;
   const userId = req.data;
   await orderService(cartId, userId, sum);
   return res.status(200).json({ message: 'purchased!' });
-};
+});
 
 module.exports = {
   postCart,

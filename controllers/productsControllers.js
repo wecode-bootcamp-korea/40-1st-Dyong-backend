@@ -7,9 +7,7 @@ const {
 
 const getAllProducts = catchAsync(async (req, res, next) => {
   const { type, sort, page } = req.query;
-  console.log(type);
-  console.log(sort);
-  console.log(page);
+
   if (!type) {
     const data = await sortOnly(sort, page);
     return res.status(200).json(data);
@@ -27,13 +25,13 @@ const getAllProducts = catchAsync(async (req, res, next) => {
 const getProductsByCategory = catchAsync(async (req, res, next) => {
   const { type, sort, page } = req.query;
   const category = req.params.category;
-
-  if (!sort) {
-    const data = await typeOnly(type, page, category);
-    return res.status(200).json(data);
-  }
+  console.log(category);
   if (!type) {
     const data = await sortOnly(sort, page, category);
+    return res.status(200).json(data);
+  }
+  if (!sort) {
+    const data = await typeOnly(type, page, category);
     return res.status(200).json(data);
   }
   if (type && sort) {
