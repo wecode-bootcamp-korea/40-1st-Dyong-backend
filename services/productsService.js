@@ -5,6 +5,7 @@ const {
   getCategoryBySort,
   getCategoryByType,
   getCategoryBySortQuery,
+  getProductsById
 } = require('../models/productsDao');
 const { sortBy, typeBy } = require('./queryBuilder.js');
 
@@ -57,8 +58,15 @@ const typeAndSort = async (type, sort, page, category) => {
     throw err;
   }
 };
+
+const productsDetail = async(productId) => {
+  const productServiceId = await getProductsById(productId)
+  return productServiceId
+}
+
 module.exports = {
   sortOnly,
   typeOnly,
   typeAndSort,
+  productsDetail
 };
