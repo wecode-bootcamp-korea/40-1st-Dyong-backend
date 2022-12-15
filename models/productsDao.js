@@ -270,6 +270,29 @@ const getCategoryBySortQuery = async (order, page) => {
   }
 };
 
+const getProductsById = async (id) => {
+  const data = await appDataSource.query(
+    `
+        SELECT
+            p.id,
+            p.name,
+            p.content,
+            p.price,
+            p.category_id,
+            i.main_image,
+            i.content_image
+        FROM 
+            products as p
+        INNER JOIN 
+          images as i 
+        ON 
+          p.image_id = i.id
+        WHERE 
+        p.id = '${id}'
+        `
+  );
+  return data;
+};
 module.exports = {
   allProducts,
   getProductsByType,
@@ -279,4 +302,5 @@ module.exports = {
   getCategory,
   getCategoryByType,
   getCategoryBySortQuery,
+  getProductsById,
 };
