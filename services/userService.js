@@ -69,7 +69,6 @@ const signInService = async (username, password) => {
 
     throw error;
   }
-
   const isMatch = await bcrypt.compare(password, user[0].password);
 
   if (!isMatch) {

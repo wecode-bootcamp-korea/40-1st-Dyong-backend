@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/', getAllProducts);
 router.get('/:category', getProductsByCategory);
-router.post('/detail/:id', loginRequired, postCart);
+router.post('/detail/:productId', loginRequired, postCart);
 router.get('/detail/:productId', getProductsById);
 
 module.exports = router;

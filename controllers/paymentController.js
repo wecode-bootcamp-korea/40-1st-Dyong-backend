@@ -7,7 +7,7 @@ const {
 } = require('../services/paymentService');
 
 const postCart = catchAsync(async (req, res, next) => {
-  const productId = req.params.id;
+  const productId = req.params.productId;
   const userId = req.data;
   const quantity = req.body.quantity;
   await postCartService(productId, userId, quantity);

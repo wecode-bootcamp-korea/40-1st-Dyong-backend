@@ -280,6 +280,7 @@ const getProductsById = async (id) => {
             p.price,
             p.category_id,
             i.main_image,
+            i.sub_image,
             i.content_image
         FROM 
             products as p

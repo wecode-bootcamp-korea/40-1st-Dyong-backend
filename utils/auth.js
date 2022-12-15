@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const loginRequired = async (req, res, next) => {
+const loginRequired = (req, res, next) => {
   const accessToken = req.headers.authorization;
 
   if (!accessToken) {
