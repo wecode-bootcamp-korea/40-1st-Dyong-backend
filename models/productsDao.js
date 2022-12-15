@@ -1,10 +1,11 @@
 const dotenv = require('dotenv');
-const { appDataSource } = require('./userDao');
-const limit = 6;
+const { appDataSource } = require('./appDatasource');
+const limit = 8;
 dotenv.config();
 
 const allProducts = async (page) => {
-  const start = parseInt(page) * 6;
+  console.log(page);
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT
@@ -107,7 +108,7 @@ const getProductsBySortQuery = async (order, page) => {
       INNER JOIN 
           images i 
       ON 
-          p.image_id = i.id
+            p.image_id = i.id
       INNER JOIN 
           product_types t
       ON 
@@ -268,6 +269,7 @@ const getCategoryBySortQuery = async (order, page) => {
     throw error;
   }
 };
+
 module.exports = {
   allProducts,
   getProductsByType,

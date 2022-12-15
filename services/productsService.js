@@ -10,6 +10,7 @@ const { sortBy, typeBy } = require('./queryBuilder.js');
 
 const sortOnly = async (sort, page, category) => {
   const order = sortBy(sort);
+  console.log(order);
   try {
     if (category) {
       const data = await getCategoryBySort(order, page, category);
@@ -57,6 +58,7 @@ const typeAndSort = async (type, sort, page, category) => {
     throw err;
   }
 };
+
 module.exports = {
   sortOnly,
   typeOnly,

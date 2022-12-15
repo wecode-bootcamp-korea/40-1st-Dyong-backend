@@ -1,15 +1,4 @@
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-const appDataSource = new DataSource({
-  type: process.env.TYPEORM_CONNECTION,
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE,
-});
+const { appDataSource } = require('./appDatasource');
 
 const createUser = async (fullName, email, username, password, phoneNumber) => {
   return await appDataSource.query(
@@ -42,8 +31,19 @@ const getUserById = async (id) => {
   }
 };
 
+const updateUserPoint = async (userId, sum) => {
+  return await appDataSource.query(`
+  UPDATE
+      users
+  SET
+      point = point - ${sum}
+  WHERE
+      id = ${userId}
+  `);
+};
+
 module.exports = {
   getUserById,
-  appDataSource,
   createUser,
+  updateUserPoint,
 };
