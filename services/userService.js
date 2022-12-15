@@ -10,6 +10,7 @@ const hashPassword = async(password) => {
 
 const signUpService = async(fullName, email, username, password, phoneNumber) => {
   const emailRegex =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  const passwordRegex =/^[0-9a-zA-Z]([~!@#$%^&*-_.,?]?[0-9a-zA-Z]){4,20}$/;
 	const phoneNumberRegex = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/;
 
 	if ( !fullName || !email || !username || !password || !phoneNumber ) {
@@ -21,6 +22,13 @@ const signUpService = async(fullName, email, username, password, phoneNumber) =>
 	
 	if (!emailRegex.test(email)) {
 		const error = new Error('INVALID_EMAIL');
+		error.statusCode = 400;
+
+		throw error
+	}
+
+  if (!passwordRegex.test(password)) {
+		const error = new Error('INVALID_PASSWORD');
 		error.statusCode = 400;
 
 		throw error

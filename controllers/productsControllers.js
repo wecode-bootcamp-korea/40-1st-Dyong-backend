@@ -51,8 +51,8 @@ const getProductsByCategory = catchAsync(async (req, res, next) => {
 });
 
 const getProductsById = catchAsync(async(req, res) => {
-  const Id = await productsDetail(req.params.id)
-  return res.status(200).json(Id);
+  const productId = await productsDetail(req.params.productId)
+  return res.status(200).json(productId);
 });
 
 

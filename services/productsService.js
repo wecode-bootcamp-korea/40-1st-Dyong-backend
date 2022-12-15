@@ -59,9 +59,9 @@ const typeAndSort = async (type, sort, page, category) => {
   }
 };
 
-const productsDetail = async(id) => {
-  const productsId = await getProductsById(id)
-  return productsId
+const productsDetail = async(productId) => {
+  const productServiceId = await getProductsById(productId)
+  return productServiceId
 }
 
 module.exports = {

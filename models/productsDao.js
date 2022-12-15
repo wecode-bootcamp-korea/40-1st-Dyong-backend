@@ -287,7 +287,7 @@ const getProductsById = async(id) => {
         ON 
           p.image_id = i.id
         WHERE 
-        p.id = ${id}
+        p.id = '${id}'
         `);
     return data;
 }

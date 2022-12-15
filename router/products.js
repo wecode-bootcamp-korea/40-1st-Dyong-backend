@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.get('/', getAllProducts);
 router.get('/:category', getProductsByCategory);
-router.get('/detail/:id', getProductsById);
+router.get('/detail/:productId', getProductsById);
 
 module.exports = router;
