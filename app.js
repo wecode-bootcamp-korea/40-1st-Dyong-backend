@@ -4,7 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const routes = require('./router');
 const { errorHandler } = require('./middlewares/error-handling');
-const { appDataSource } = require('./models/userDao.js');
+const { appDataSource } = require('./models/appDatasource');
 
 dotenv.config();
 

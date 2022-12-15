@@ -5,12 +5,13 @@ const {
   getCategoryBySort,
   getCategoryByType,
   getCategoryBySortQuery,
-  getProductsById
+  getProductsById,
 } = require('../models/productsDao');
 const { sortBy, typeBy } = require('./queryBuilder.js');
 
 const sortOnly = async (sort, page, category) => {
   const order = sortBy(sort);
+  console.log(order);
   try {
     if (category) {
       const data = await getCategoryBySort(order, page, category);
@@ -59,14 +60,13 @@ const typeAndSort = async (type, sort, page, category) => {
   }
 };
 
-const productsDetail = async(productId) => {
-  const productServiceId = await getProductsById(productId)
-  return productServiceId
-}
-
+const productsDetail = async (productId) => {
+  const productServiceId = await getProductsById(productId);
+  return productServiceId;
+};
 module.exports = {
   sortOnly,
   typeOnly,
   typeAndSort,
-  productsDetail
+  productsDetail,
 };

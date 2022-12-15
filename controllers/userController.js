@@ -9,15 +9,9 @@ const signUp = async (req, res) => {
     throw error;
   }
 
-  const insertId = await signUpService(
-    fullName,
-    email,
-    username,
-    password,
-    phoneNumber
-  );
+  await signUpService(fullName, email, username, password, phoneNumber);
 
-  res.status(201).json({ insertId });
+  return res.status(201).json({ message: 'USER_CREATED' });
 };
 
 const signIn = async (req, res, next) => {

@@ -1,10 +1,11 @@
 const dotenv = require('dotenv');
-const { appDataSource } = require('./userDao');
-const limit = 6;
+const { appDataSource } = require('./appDatasource');
+const limit = 8;
 dotenv.config();
 
 const allProducts = async (page) => {
-  const start = parseInt(page) * 6;
+  console.log(page);
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT
@@ -31,7 +32,7 @@ const allProducts = async (page) => {
 };
 
 const getProductsByType = async (type, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
       SELECT
@@ -64,7 +65,7 @@ const getProductsByType = async (type, page) => {
 };
 
 const getProductsBySort = async (order, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT 
@@ -93,7 +94,7 @@ const getProductsBySort = async (order, page) => {
 };
 
 const getProductsBySortQuery = async (order, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
       SELECT 
@@ -107,7 +108,7 @@ const getProductsBySortQuery = async (order, page) => {
       INNER JOIN 
           images i 
       ON 
-          p.image_id = i.id
+            p.image_id = i.id
       INNER JOIN 
           product_types t
       ON 
@@ -126,7 +127,7 @@ const getProductsBySortQuery = async (order, page) => {
 };
 
 const getCategory = async (page, category) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
     SELECT
@@ -159,7 +160,7 @@ const getCategory = async (page, category) => {
 };
 
 const getCategoryBySort = async (order, page, category) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT 
@@ -194,7 +195,7 @@ const getCategoryBySort = async (order, page, category) => {
 };
 
 const getCategoryByType = async (order, page, category) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
         SELECT 
@@ -233,7 +234,7 @@ const getCategoryByType = async (order, page, category) => {
 };
 
 const getCategoryBySortQuery = async (order, page) => {
-  const start = parseInt(page) * 6;
+  const start = parseInt(page) * 8;
   try {
     const data = await appDataSource.query(`
       SELECT 
@@ -269,9 +270,9 @@ const getCategoryBySortQuery = async (order, page) => {
   }
 };
 
-const getProductsById = async(id) => {
-    const data = await appDataSource.query(
-        `
+const getProductsById = async (id) => {
+  const data = await appDataSource.query(
+    `
         SELECT
             p.id,
             p.name,
@@ -288,10 +289,10 @@ const getProductsById = async(id) => {
           p.image_id = i.id
         WHERE 
         p.id = '${id}'
-        `);
-    return data;
-}
-
+        `
+  );
+  return data;
+};
 module.exports = {
   allProducts,
   getProductsByType,
@@ -301,5 +302,5 @@ module.exports = {
   getCategory,
   getCategoryByType,
   getCategoryBySortQuery,
-  getProductsById
+  getProductsById,
 };
