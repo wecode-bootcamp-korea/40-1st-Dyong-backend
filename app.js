@@ -16,7 +16,7 @@ appDataSource
   .initialize()
   .then(async () => {
     console.log('data has been initialized!');
-    productsUpload('./mock-data/products2.csv');
+    productsUpload('./mock-data/realProduct.csv');
   })
   .catch((err) => {
     console.log(err);
