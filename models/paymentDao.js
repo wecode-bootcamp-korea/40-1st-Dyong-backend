@@ -22,9 +22,10 @@ const postCart = async (productId, userId, quantity) => {
 const getCart = async (id) => {
   const data = await appDataSource.query(`
   SELECT
-      c.id as cartId,
+      c.id,
       p.name,
       p.price,
+      p.content,
       i.main_image as image,
       c.quantity
   FROM 

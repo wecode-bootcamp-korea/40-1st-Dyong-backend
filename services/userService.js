@@ -17,8 +17,8 @@ const signUpService = async (
   phoneNumber
 ) => {
   const emailRegex =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  const passwordRegex = /^[0-9a-zA-Z]([~!@#$%^&*-_.,?]?[0-9a-zA-Z]){4,20}$/;
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+  // const passwordRegex = /^[0-9]([~!@#$%^&*-_.,?]?[0-9]){4,20}$/;
   const phoneNumberRegex = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/;
 
   if (!emailRegex.test(email)) {
@@ -28,12 +28,12 @@ const signUpService = async (
     throw error;
   }
 
-  if (!passwordRegex.test(password)) {
-    const error = new Error('INVALID_PASSWORD');
-    error.statusCode = 400;
+  // if (!passwordRegex.test(password)) {
+  //   const error = new Error('INVALID_PASSWORD');
+  //   error.statusCode = 400;
 
-    throw error;
-  }
+  //   throw error;
+  // }
 
   if (!phoneNumberRegex.test(phoneNumber)) {
     const error = new Error('INVALID_PHONE_NUMBER');
